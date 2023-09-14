@@ -7,19 +7,15 @@
 #include<string>
 #include<vector>
 #include<fstream>
-// header file with all the boards?? that the class inherits
-// okay and then something randomly picks the board and displays it?
-// watch some vids
+// header file with all the boards
 
 using namespace std;
 
-class game // header file with all the boards?? that the class inherits
+class game // header file with all the boards that the class inherits
 {
 private:
 
     int choice; // level of difficulty users choose
-
-
 
 public:
 
@@ -65,7 +61,7 @@ public:
     void displayBoard()
     {
         // clear screen from menu
-
+        system("cls");
 
         // test board
         int sudokuBoard1A[9][9] = 
@@ -81,33 +77,68 @@ public:
          {0, 0, 5, 2, 0, 6, 3, 0, 0}
         };
 
-        // doesn't show up because nothing is being done to display it on screen
-        cout << "display board" << endl;
-
-        // display actual board
-        /*
         
-        >:[
+        // display board
+        cout << "ROYAL BLUE SUDOKU" << endl; // title
+        cout << "-------------------------" << endl; // top of board
         
-        
-        
-        */
+        // i --> rows
+        // x --> columns
+        // use for loop + nested for loop to display sudokuBoard1A
+        for (int i = 0; i < 9; i++)
+        {
+            cout << "| "; // row line
+            for (int x = 0; x < 9; x++)
+            {
+                if (sudokuBoard1A[i][x] == 0) // if the box is empty
+                {
+                    cout << " "; // print a blank space
+                } 
+                else
+                {
+                    cout << sudokuBoard1A[i][x]; // print numbers
+                }
 
+                if (x % 3 == 2) // if uou're on the LAST COLUMN in 3*3 box, print the bar
+                {
+                    cout << " | "; // create the 3*3 boxes
+                }
+                else 
+                {
+                    cout << " "; // add space between numbers (without it's uneven)
+                }
+                    
+            }
+            cout << endl;
 
-      
-        /* NOTES -------------------------------------------------------------------
-        
-        there also needs to be a mistake tabulator
-        and hints
-        make a space for this and worry about details later
-
-        sudoku.com displays (with the board) difficulty, mistakes, score, and time. 
-
-        i need something for score and time. how is sudoku scored? idk
-        
-        */
-
+            if (i % 3 == 2) // if you're on the LAST ROW in 3*3 box, print the bar
+            {
+                cout << "-------------------------" << endl; // bottom board
+            }
+        }
     }
+
+    // collect user input + check rules
+
+    /*
+    all i can think of is labeling the rows and columns, asking the user to enter them, and then putting in their number. checking that position for the rules, and if it follows them, placing the number there
+    
+    need an array for the row and column labels, then iterate through it until 9, printing the labels
+
+    user will select rowXcolumn value
+
+    cin >> row >> column;
+
+    store it in the position they enter sudokuBoard[row][col]
+
+    check this position to see if it abides by rules, and if it does, keep it/display it. if it doesn't, that is when it should prompt users to enter another number somewhere else. here it needs to tabulate mistakes too.
+    */
+
+
+
+
+
+
 
 
 
