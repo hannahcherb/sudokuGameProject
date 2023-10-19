@@ -155,18 +155,13 @@ int main()
             cout << "Invalid input. Please try again." << endl;
             continue;
         }
-
-        // This needs to work in order for the board to keep displaying
-        //if (sudokuboard[row - 1][col - 1] == 0 && isSafe(row - 1, col - 1, num))
-        //{
-        //    sudokuboard[row - 1][col - 1] = num;
-        //    showGame();
-        //}
-        // This needs to work in order for the board to keep displaying
-        if (num)
+       
+        // Allows numbers to go on the board without logic/being correct
+        if (num) // if (atSudokuSpot==0 AND atSudokuSpot is correct)
         {
             details.sudokuBoard1A[row-1][col-1] = num;
             details.displayBoard();
+            cout << "Enter the row, column, and number (1-9) of your Sudoku move (ex: 2 5 2):" << endl;
         }
 
 
@@ -177,7 +172,7 @@ int main()
 
         //if (solved()) // if the board is solved
         //{
-        //    cout << "Congratulations! You have solved the Sudoku puzzle." << endl;
+        //    cout << "Congratulations!" << endl;
         //    break;
         //}
     }
