@@ -7,11 +7,11 @@
 #include<string>
 #include<vector>
 #include<fstream>
-// header file with all the boards
+#include "boards.h" // include header file
 
 using namespace std;
 
-class game // header file with all the boards that the class inherits
+class game : public boards // inherits boards from .h file
 {
 private:
 
@@ -118,15 +118,44 @@ public:
         }
     }
 
-    // collect user input + check rules
+   // make sure input is correct
+    bool correctInput(int row, int col, int num)
+    {
+        // check row
+        for (int x = 0; x < 9; x++) // go through the rows
+        {
+            if (sudokuBoard1A[row][x] == num) // if the number already appears in another row at the same spot
+            {
+                return false; // input can NOT go in
+            }
+        }
 
-    // bool function to check if a number is valid by row and column
+        // check column
+        for (int x = 0; x < 9; x++) // go through the columns
+        {
+            if (sudokuBoard1A[x][col] == num) // if the number already appears in another column at the same spot
+            {
+                return false; // input can NOT go in
+            }
+        }
 
-    // bool function to check if board is full
+        // check box
+        int startRow = row - row % 3; // starting row of the box
+        int startCol = col - col % 3; // starting col in the box
+        for (int i = 0; i < 3; i++) // loop through rows
+        {
+            for (int j = 0; j < 3; j++) // loop through columns
+            {
+                // if num is in the box
+                if (sudokuBoard1A[i + startRow][j + startCol] == num)
+                    return false; // input can NOT go in
+            }
+        }
 
-    // void function to play the game, upon conditions of first 2
+        // if the input follows all the rules
+        return true;   // it shall pass!
 
-
+    }
 
 };
 
@@ -157,7 +186,7 @@ int main()
         }
        
         // Allows numbers to go on the board without logic/being correct
-        if (num) // if (atSudokuSpot==0 AND atSudokuSpot is correct)
+        if (details.sudokuBoard1A[row - 1][col - 1]==0 && details.correctInput(row-1,col-1,num))
         {
             details.sudokuBoard1A[row-1][col-1] = num;
             details.displayBoard();
