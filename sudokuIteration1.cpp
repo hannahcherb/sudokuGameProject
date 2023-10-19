@@ -58,14 +58,8 @@ public:
         }
     }
 
-    void displayBoard()
+    int sudokuBoard1A[9][9] =
     {
-        // clear screen from menu
-        system("cls");
-
-        // test board
-        int sudokuBoard1A[9][9] = 
-        {
          {0, 0, 6, 5, 0, 8, 4, 0, 0},
          {5, 2, 0, 0, 0, 1, 0, 0, 0},
          {0, 7, 8, 0, 0, 0, 0, 0, 1},
@@ -75,10 +69,16 @@ public:
          {1, 3, 0, 0, 0, 0, 2, 5, 0},
          {0, 0, 0, 0, 0, 0, 0, 7, 4},
          {0, 0, 5, 2, 0, 6, 3, 0, 0}
-        };
+    };
 
-        
-        // display board
+
+    void displayBoard()
+    {
+        // clear screen from menu
+        system("cls");
+
+    
+       // display board
         cout << "ROYAL BLUE SUDOKU" << endl; // title
         cout << "-------------------------" << endl; // top of board
         
@@ -120,27 +120,11 @@ public:
 
     // collect user input + check rules
 
-    /*
-    all i can think of is labeling the rows and columns, asking the user to enter them, and then putting in their number. checking that position for the rules, and if it follows them, placing the number there
-    
-    need an array for the row and column labels, then iterate through it until 9, printing the labels
+    // bool function to check if a number is valid by row and column
 
-    user will select rowXcolumn value
+    // bool function to check if board is full
 
-    cin >> row >> column;
-
-    store it in the position they enter sudokuBoard[row][col]
-
-    check this position to see if it abides by rules, and if it does, keep it/display it. if it doesn't, that is when it should prompt users to enter another number somewhere else. here it needs to tabulate mistakes too.
-    */
-
-
-
-
-
-
-
-
+    // void function to play the game, upon conditions of first 2
 
 
 
@@ -158,7 +142,49 @@ int main()
     details.getChoice();
     
 
-    // return 0;
+    // collect choice
+    int row, col, num;
+    cout << "Enter the row, column, and number (1-9) of your Sudoku move (ex: 2 5 2):" << endl;
+
+    while (true) // find better way than this
+    {
+        cin >> row >> col >> num; // get user input
+        // if they enter a number that is not 1-9
+        if (row < 1 || row > 9 || col < 1 || col > 9 || num < 1 || num > 9)
+        {
+            cout << "Invalid input. Please try again." << endl;
+            continue;
+        }
+
+        // This needs to work in order for the board to keep displaying
+        //if (sudokuboard[row - 1][col - 1] == 0 && isSafe(row - 1, col - 1, num))
+        //{
+        //    sudokuboard[row - 1][col - 1] = num;
+        //    showGame();
+        //}
+        // This needs to work in order for the board to keep displaying
+        if (num)
+        {
+            details.sudokuBoard1A[row-1][col-1] = num;
+            details.displayBoard();
+        }
+
+
+        else // if their input is valid but incorrect
+        {
+            cout << "Invalid move! Please try again." << endl;
+        }
+
+        //if (solved()) // if the board is solved
+        //{
+        //    cout << "Congratulations! You have solved the Sudoku puzzle." << endl;
+        //    break;
+        //}
+    }
+
+
+
+    return 0;
 
 }
 
