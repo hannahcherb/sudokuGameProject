@@ -15,7 +15,8 @@ class game : public boards // inherits boards from .h file
 {
 private:
 
-    int choice; // level of difficulty users choose
+    int choiceDifficulty; // difficulty users choose
+    int choiceLevel; // level (board)
 
 public:
 
@@ -33,22 +34,113 @@ public:
         cout << "2 - Medium" << endl;
         cout << "3 - Hard" << endl;
         cout << "Enter the number corresponding to your choice: ";
-        cin >> choice;
+        cin >> choiceDifficulty;
 
-        if (choice == 1)
+        if (choiceDifficulty == 1) // send them to easy level
         {
-            // send them to easy level
-            displayBoard();
+            // Allow them to choose 1 of 3 board options
+            cout << endl << "Choose your level:" << endl;
+            // this is where the design could come in!!
+
+            cout << "1 - Rocky Mountain Climb" << endl;
+            cout << "2 - Arctic Circle Plunge" << endl;
+            cout << "3 - Amazon Jungle Dash" << endl;
+            cout << "Enter the number corresponding to your choice: ";
+            cin >> choiceLevel;
+
+            if (choiceLevel == 1)
+            {
+                displayBoard(sudokuBoard1A); // send the board here
+                playGame(sudokuBoard1A);
+            }
+            else if (choiceLevel == 2)
+            {
+                displayBoard(sudokuBoard1B); // send the board here
+                playGame(sudokuBoard1B);
+            }
+            else if (choiceLevel == 3)
+            {
+                displayBoard(sudokuBoard1C); // send the board here
+                playGame(sudokuBoard1C);
+            } 
+            else
+            {
+                // send them back to menu and tell them to try again
+                system("cls"); // better way ? find
+                getChoice();
+            }
         }
-        else if (choice == 2)
+        // DO THIS ********************************
+        else if (choiceDifficulty == 2)
         {
             // send them to medium level
-            displayBoard();
+            // Allow them to choose 1 of 3 board options
+            cout << endl << "Choose your level:" << endl;
+            // this is where the design could come in!!
+
+            cout << "1 - Swiss Alps Ascent" << endl;
+            cout << "2 - Grand Canyon Expedition" << endl;
+            cout << "3 - Barrier Reef Dive" << endl;
+            cout << "Enter the number corresponding to your choice: ";
+            cin >> choiceLevel;
+
+            if (choiceLevel == 1)
+            {
+                displayBoard(sudokuBoard2A); // send the board here
+                playGame(sudokuBoard2A);
+            }
+            else if (choiceLevel == 2)
+            {
+                displayBoard(sudokuBoard2B); // send the board here
+                playGame(sudokuBoard2B);
+            }
+            else if (choiceLevel == 3)
+            {
+                displayBoard(sudokuBoard2C); // send the board here
+                playGame(sudokuBoard2C);
+            }
+            else
+            {
+                // send them back to menu and tell them to try again
+                system("cls"); // better way ? find
+                getChoice();
+            }
         }
-        else if (choice == 3)
+        // DO THIS ********************************
+        else if (choiceDifficulty == 3)
         {
             // send them to hard level
-            displayBoard();
+                        // Allow them to choose 1 of 3 board options
+            cout << endl << "Choose your level:" << endl;
+            // this is where the design could come in!!
+
+            cout << "1 - Australian Outback Adventure" << endl;
+            cout << "2 - Sea Abyss Odyssey" << endl;
+            cout << "3 - Nuclear Meltdown Fallout" << endl;
+            cout << "Enter the number corresponding to your choice: ";
+            cin >> choiceLevel;
+
+            if (choiceLevel == 1)
+            {
+                displayBoard(sudokuBoard3A); // send the board here
+                playGame(sudokuBoard3A);
+            }
+            else if (choiceLevel == 2)
+            {
+                displayBoard(sudokuBoard3B); // send the board here
+                playGame(sudokuBoard3B);
+            }
+            else if (choiceLevel == 3)
+            {
+                displayBoard(sudokuBoard3C); // send the board here
+                playGame(sudokuBoard3C);
+            }
+            else
+            {
+                // send them back to menu and tell them to try again
+                system("cls"); // better way ? find
+                getChoice();
+            }
         }
         else
         {
@@ -58,25 +150,29 @@ public:
         }
     }
 
-    int sudokuBoard1A[9][9] =
-    {
-         {0, 0, 6, 5, 0, 8, 4, 0, 0},
-         {5, 2, 0, 0, 0, 1, 0, 0, 0},
-         {0, 7, 8, 0, 0, 0, 0, 0, 1},
-         {0, 0, 4, 0, 1, 0, 0, 8, 0},
-         {9, 0, 0, 8, 2, 3, 0, 0, 5},
-         {0, 5, 0, 0, 9, 0, 6, 0, 0},
-         {1, 3, 0, 0, 0, 0, 2, 5, 0},
-         {0, 0, 0, 0, 0, 0, 0, 7, 4},
-         {0, 0, 5, 2, 0, 6, 3, 0, 0}
-    };
 
 
-    void displayBoard()
+
+    void displayBoard(int arr[9][9])
     {
+        
         // clear screen from menu
         system("cls");
 
+        /*
+        
+        i need to just get a generic name for the board that i will pass
+        
+        in this, since you are passing the array in here, you can replace sudokuBoard1A with arr[]
+
+        but in the others, it doesn't have this array. the choices are being
+        sent in the same way. so it doesn't know what you're talking about.
+
+        there needs to be a way so do this in a generic manner to make it all easier
+
+        theres an issue in main that also needs this treatment
+        
+        */
     
        // display board
         cout << "ROYAL BLUE SUDOKU" << endl; // title
@@ -90,13 +186,13 @@ public:
             cout << "| "; // row line
             for (int x = 0; x < 9; x++)
             {
-                if (sudokuBoard1A[i][x] == 0) // if the box is empty
+                if (arr[i][x] == 0) // if the box is empty
                 {
                     cout << " "; // print a blank space
                 } 
                 else
                 {
-                    cout << sudokuBoard1A[i][x]; // print numbers
+                    cout << arr[i][x]; // print numbers
                 }
 
                 if (x % 3 == 2) // if uou're on the LAST COLUMN in 3*3 box, print the bar
@@ -119,35 +215,33 @@ public:
     }
 
    // make sure input is correct
-    bool correctInput(int row, int col, int num)
+    bool correctInput(int row, int col, int num, int arr[9][9])
     {
         // check row
-        for (int x = 0; x < 9; x++) // go through the rows
+        for (int x = 0; x < 9; x++) // go through the columns
         {
-            if (sudokuBoard1A[row][x] == num) // if the number already appears in another row at the same spot
+            if (arr[row][x] == num) // if the number already appears in another col in the row
             {
                 return false; // input can NOT go in
             }
         }
 
         // check column
-        for (int x = 0; x < 9; x++) // go through the columns
+        for (int x = 0; x < 9; x++) // go through the rows
         {
-            if (sudokuBoard1A[x][col] == num) // if the number already appears in another column at the same spot
+            if (arr[x][col] == num) // if the number already appears in another row in the col
             {
                 return false; // input can NOT go in
             }
         }
 
         // check box
-        int startRow = row - row % 3; // starting row of the box
-        int startCol = col - col % 3; // starting col in the box
         for (int i = 0; i < 3; i++) // loop through rows
         {
             for (int j = 0; j < 3; j++) // loop through columns
             {
                 // if num is in the box
-                if (sudokuBoard1A[i + startRow][j + startCol] == num)
+                if (arr[i][j] == num)
                     return false; // input can NOT go in
             }
         }
@@ -157,12 +251,65 @@ public:
 
     }
 
+
+    void playGame(int arr[9][9])
+    {
+        // collect choice
+        int row, col, num;
+        cout << "To return to the main menu, enter '0 0 0'" << endl << endl;
+        cout << "Enter the row, column, and number (1-9) of your Sudoku move (ex: 2 5 2):" << endl;
+
+        while (true) // find better way than this
+        {
+            cin >> row >> col >> num; // get user input
+
+            // if they want to exit to main menu
+            if (row == 0 && col == 0 && num == 0)
+            {
+                system("cls");
+                getChoice();
+            }
+            // if they enter a number that is not 1-9
+            if (row < 1 || row > 9 || col < 1 || col > 9 || num < 1 || num > 9)
+            {
+                cout << "Invalid input. Please try again." << endl;
+                continue;
+            }
+
+            // Allows numbers to go on the board without logic/being correct
+            if (arr[row - 1][col - 1] == 0 && correctInput(row - 1, col - 1, num, arr))
+            {
+                arr[row - 1][col - 1] = num;
+                displayBoard(arr);
+                cout << "Enter the row, column, and number (1-9) of your Sudoku move (ex: 2 5 2):" << endl;
+            }
+
+            else // if their input is valid but incorrect
+            {
+                cout << "Invalid move! Please try again." << endl;
+            }
+
+            //if (solved()) // if the board is solved
+            //{
+            //    cout << "Congratulations!" << endl;
+            //    break;
+            //}
+        }
+
+
+
+    }
+
+
+
+
 };
 
 
 
 int main()
 {
+    // main needs to know the board that i have chosen
 
     // Make object of class
     game details;
@@ -171,40 +318,7 @@ int main()
     details.getChoice();
     
 
-    // collect choice
-    int row, col, num;
-    cout << "Enter the row, column, and number (1-9) of your Sudoku move (ex: 2 5 2):" << endl;
-
-    while (true) // find better way than this
-    {
-        cin >> row >> col >> num; // get user input
-        // if they enter a number that is not 1-9
-        if (row < 1 || row > 9 || col < 1 || col > 9 || num < 1 || num > 9)
-        {
-            cout << "Invalid input. Please try again." << endl;
-            continue;
-        }
-       
-        // Allows numbers to go on the board without logic/being correct
-        if (details.sudokuBoard1A[row - 1][col - 1]==0 && details.correctInput(row-1,col-1,num))
-        {
-            details.sudokuBoard1A[row-1][col-1] = num;
-            details.displayBoard();
-            cout << "Enter the row, column, and number (1-9) of your Sudoku move (ex: 2 5 2):" << endl;
-        }
-
-
-        else // if their input is valid but incorrect
-        {
-            cout << "Invalid move! Please try again." << endl;
-        }
-
-        //if (solved()) // if the board is solved
-        //{
-        //    cout << "Congratulations!" << endl;
-        //    break;
-        //}
-    }
+   
 
 
 
