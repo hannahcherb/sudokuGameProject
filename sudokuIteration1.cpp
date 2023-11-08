@@ -1,6 +1,6 @@
 // Name: Hannah Cherb
 // Program Description: Sudoku Game :D
-// ^^ add more later
+
 
 
 #include<iostream>
@@ -30,9 +30,9 @@ public:
         cout << "three difficulty levels: easy, medium, or hard. Please choose a" << endl;
         cout << "difficulty level below." << endl;
 
-        cout << "1 - Easy" << endl;
-        cout << "2 - Medium" << endl;
-        cout << "3 - Hard" << endl;
+        cout << "1 - Easy (6 mistakes allowed)" << endl;
+        cout << "2 - Medium (4 mistakes allowed)" << endl;
+        cout << "3 - Hard (2 mistakes allowed)" << endl;
         cout << "Enter the number corresponding to your choice: ";
         cin >> choiceDifficulty;
 
@@ -159,21 +159,6 @@ public:
         // clear screen from menu
         system("cls");
 
-        /*
-        
-        i need to just get a generic name for the board that i will pass
-        
-        in this, since you are passing the array in here, you can replace sudokuBoard1A with arr[]
-
-        but in the others, it doesn't have this array. the choices are being
-        sent in the same way. so it doesn't know what you're talking about.
-
-        there needs to be a way so do this in a generic manner to make it all easier
-
-        theres an issue in main that also needs this treatment
-        
-        */
-    
        // display board
         cout << "ROYAL BLUE SUDOKU" << endl; // title
         cout << "-------------------------" << endl; // top of board
@@ -251,6 +236,36 @@ public:
 
     }
 
+    // check if it is solved ******************************************
+    //bool solved(int arr[9][9])
+    //{
+    //    for (int row = 0; row < 9; row++) // loop through rows
+    //    {
+    //        for (int col = 0; col < 9; col++) // loop through columns
+    //        {
+    //            if (arr[row][col] == 0) // if cell is empty
+    //            {
+    //                for (int num = 1; num <= 9; num++) // try numbers from 1 to 9
+    //                {
+    //                    if (correctInput(row, col, num, arr)) // if the num is in the correct place
+    //                    {
+    //                        arr[row][col] = num; // put the number in the cell
+
+    //                        if (solved(arr)) // check if the board can be solved with this number
+    //                            return true; // if solved, return true
+
+    //                        arr[row][col] = 0; // if the board cannot be solved, reset the cell
+    //                    }
+    //                }
+    //                return false; // if no number works, return false
+    //            }
+    //        }
+    //    }
+    //    return true; // if all cells are filled, return true - it is solved!!
+    //}
+    // ******************************************************************
+
+
 
     void playGame(int arr[9][9])
     {
@@ -287,20 +302,64 @@ public:
             else // if their input is valid but incorrect
             {
                 cout << "Invalid move! Please try again." << endl;
+                // tabulate mistakes 
+                mistakeCounter(choiceLevel);
             }
 
-            //if (solved()) // if the board is solved
+            //if (solved(arr)) // if the board is solved
             //{
-            //    cout << "Congratulations!" << endl;
+            //    cout << "Congratulations! You solved the puzzle!" << endl;
             //    break;
             //}
         }
-
-
-
     }
 
+    void mistakeCounter(int choiceLevel)
+    {
+        static int mistakeCount = 0; // static (no unlimited chances)
 
+        mistakeCount++; 
+        cout << "Mistakes: " << mistakeCount << endl << endl;
+
+        // EASY LEVEL
+        if (mistakeCount >= 6 && choiceLevel == 1) { // check easy level (6 mistakes)
+            cout << "Game over! You have exceeded the maximum number of mistakes for this difficulty level." << endl << endl;
+            exit(0); // Exit the program
+        }
+        // MEDIUM LEVEL
+        else if (mistakeCount >= 4 && choiceLevel == 2) { // check medium level (4 mistakes)
+            cout << "Game over! You have exceeded the maximum number of mistakes for this difficulty level." << endl;
+            exit(0); // Exit the program
+        }
+        // HARD LEVEL
+        else if (mistakeCount >= 2 && choiceLevel == 3) { // check hard level (2 mistakes)
+            cout << "Game over! You have exceeded the maximum number of mistakes for this difficulty level." << endl;
+            exit(0); // Exit the program
+        }
+    }
+
+    void continueGame()
+    {
+        int playAgain;
+
+        cout << "Would you like to play again? If so, enter '1' and if you are" << endl;
+        cout << "done, enter '2':";
+        cin >> playAgain;
+        if (playAgain == 1)
+        {
+            getChoice();
+        }
+        else if (playAgain == 2)
+        {
+            cout << "Thanks for playing! Try out more levels soon!" << endl;
+        }
+        else
+        {
+            cout << "Would you like to play again? If so, enter '1' and if you are" << endl;
+            cout << "done, enter '2':";
+            cin >> playAgain;
+        }
+    }
 
 
 };
@@ -309,20 +368,13 @@ public:
 
 int main()
 {
-    // main needs to know the board that i have chosen
-
     // Make object of class
     game details;
 
     // Call menu selection and get level choice
     details.getChoice();
-    
 
-   
-
-
-
+    // done !
     return 0;
-
 }
 
