@@ -1,7 +1,6 @@
 // Name: Hannah Cherb
 // Program Description: Sudoku Game :D
 
-
 #include<iostream>
 #include<string>
 #include<vector>
@@ -15,9 +14,9 @@ private:
 
     int choiceDifficulty; // difficulty users choose
     int choiceLevel; // level (board)
-    int mistakes;
-    int comboStreak;
-    int score;
+    int mistakes; // keep tracko of mistakes
+    int comboStreak; // comboStreak to add to score
+    int score; // user score
 
 
 public:
@@ -26,9 +25,6 @@ public:
     void getChoice()
     {
        // Menu 
-       // Code a menu system for the user (basic shell of what the program 
-       // will be)
-
         cout << "Welcome to Royal Blue Sudoku! You can play a 9*9 sudoku game of" << endl;
         cout << "three difficulty levels: easy, medium, or hard. Please choose a" << endl;
         cout << "difficulty level below." << endl;
@@ -39,12 +35,9 @@ public:
         cout << "Enter the number corresponding to your choice: ";
         cin >> choiceDifficulty;
 
-        if (choiceDifficulty == 1) // send them to easy level
+        if (choiceDifficulty == 1) // easy difficulty
         {
-            // Allow them to choose 1 of 3 board options
             cout << endl << "Choose your level:" << endl;
-            // this is where the design could come in!!
-
             cout << "1 - Grand Canyon Expedition" << endl;
             cout << "2 - Rocky Mountain Climb" << endl;
             cout << "3 - Arctic Circle Plunge" << endl;
@@ -53,33 +46,30 @@ public:
 
             if (choiceLevel == 1)
             {
-                displayBoard(sudokuBoard1A); // send the board here
+                displayBoard(sudokuBoard1A); // 1A board
                 playGame(sudokuBoard1A);
             }
             else if (choiceLevel == 2)
             {
-                displayBoard(sudokuBoard1B); // send the board here
+                displayBoard(sudokuBoard1B); // 1B board
                 playGame(sudokuBoard1B);
             }
             else if (choiceLevel == 3)
             {
-                displayBoard(sudokuBoard1C); // send the board here
+                displayBoard(sudokuBoard1C); // 1C board
                 playGame(sudokuBoard1C);
             } 
             else
             {
-                // send them back to menu and tell them to try again
-                system("cls"); // better way ? find
+                // prompt to enter valid choice
+                system("cls");
                 getChoice();
             }
         }
-        // DO THIS ********************************
-        else if (choiceDifficulty == 2)
+
+        else if (choiceDifficulty == 2) // medium difficulty
         {
-            // send them to medium level
-            // Allow them to choose 1 of 3 board options
             cout << endl << "Choose your level:" << endl;
-            // this is where the design could come in!!
 
             cout << "1 - Amazon Jungle Dash" << endl;
             cout << "2 - Swiss Alps Ascent" << endl;
@@ -89,33 +79,30 @@ public:
 
             if (choiceLevel == 1)
             {
-                displayBoard(sudokuBoard2A); // send the board here
+                displayBoard(sudokuBoard2A); // 2A board
                 playGame(sudokuBoard2A);
             }
             else if (choiceLevel == 2)
             {
-                displayBoard(sudokuBoard2B); // send the board here
+                displayBoard(sudokuBoard2B); // 2B board
                 playGame(sudokuBoard2B);
             }
             else if (choiceLevel == 3)
             {
-                displayBoard(sudokuBoard2C); // send the board here
+                displayBoard(sudokuBoard2C); // 2C board
                 playGame(sudokuBoard2C);
             }
             else
             {
-                // send them back to menu and tell them to try again
-                system("cls"); // better way ? find
+                // prompt to enter valid choice
+                system("cls");
                 getChoice();
             }
         }
-        // DO THIS ********************************
-        else if (choiceDifficulty == 3)
+
+        else if (choiceDifficulty == 3) // hard difficulty
         {
-            // send them to hard level
-                        // Allow them to choose 1 of 3 board options
             cout << endl << "Choose your level:" << endl;
-            // this is where the design could come in!!
 
             cout << "1 - Australian Outback Adventure" << endl;
             cout << "2 - Sea Abyss Odyssey" << endl;
@@ -125,29 +112,29 @@ public:
 
             if (choiceLevel == 1)
             {
-                displayBoard(sudokuBoard3A); // send the board here
+                displayBoard(sudokuBoard3A); // 3A board
                 playGame(sudokuBoard3A);
             }
             else if (choiceLevel == 2)
             {
-                displayBoard(sudokuBoard3B); // send the board here
+                displayBoard(sudokuBoard3B); // 3B board
                 playGame(sudokuBoard3B);
             }
             else if (choiceLevel == 3)
             {
-                displayBoard(sudokuBoard3C); // send the board here
+                displayBoard(sudokuBoard3C); // 3C board
                 playGame(sudokuBoard3C);
             }
             else
             {
-                // send them back to menu and tell them to try again
-                system("cls"); // better way ? find
+                // prompt to enter valid choice
+                system("cls");
                 getChoice();
             }
         }
         else
         {
-            // send them back to menu and tell them to try again
+            // prompt to enter valid choice
             system("cls");
             getChoice();
         }
@@ -155,18 +142,16 @@ public:
 
 
     void displayBoard(int arr[9][9])
-    {
-        
-        // clear screen from menu
+    {   
+        // clear menu
         system("cls");
 
        // display board
         cout << "ROYAL BLUE SUDOKU" << endl; // title
         cout << "-------------------------" << endl; // top of board
         
-        // i --> rows
-        // x --> columns
-        // use for loop + nested for loop to display sudokuBoard1A
+        // i --> rows and x --> columns
+        // use for loops to display sudokuBoard
         for (int i = 0; i < 9; i++)
         {
             cout << "| "; // row line
@@ -200,10 +185,16 @@ public:
         }
     }
 
-   // make sure input is correct
+   // check input
     bool correctInput(int row, int col, int num, int arr[9][9])
     {
-        // Check the row, column, and 3x3 box
+        // check if cell is empty
+        if (arr[row][col] != 0)
+        {
+            return false;
+        }
+
+        // check the row, column, and 3x3 box
         for (int i = 0; i < 9; i++) 
         {
             if (arr[row][i] == num || arr[i][col] == num || arr[(row / 3) * 3 + i / 3][(col / 3) * 3 + i % 3] == num) 
@@ -214,58 +205,42 @@ public:
         return true;
     }
 
-    // check if it is solved ******************************************
-    bool solved(int arr[9][9]) 
+
+    // check if solved
+    bool solved(int arr[9][9], int& row, int& col)
     {
         for (int row = 0; row < 9; row++) 
         {
             for (int col = 0; col < 9; col++) 
             {
-                if (arr[row][col] == 0 || !correctInput(row, col, arr[row][col], arr))
+                if (arr[row][col] == 0)
                 {
                     // If there's an empty cell, the Sudoku is not solved
                     return false;
                 }
             }
         }
-        return true;  
+        return true; // return true for congratulatory message 
     }
 
-
-    bool findEmptyCell(int arr[9][9], int& row, int& col) 
-    {
-        for (row = 0; row < 9; row++) 
-        {
-            for (col = 0; col < 9; col++) 
-            {
-                if (arr[row][col] == 0) 
-                {
-                    return true;  // Found an empty cell
-                }
-            }
-        }
-        return false;  // All cells are filled
-    }
-
+    // play the game
     void playGame(int arr[9][9])
     {
-        // collect choice
+        // variables
         int row, col, num;
-        score = 50; // for pts
-        comboStreak = 0; // for pts
+        score = 50;
+        comboStreak = 0;
         mistakes = 0;
-
 
         cout << "To return to the main menu, enter '0 0 0'" << endl << endl;
         cout << "Enter the row, column, and number (1-9) of your Sudoku move (ex: 2 5 2):" << endl;
         
-
-        while (true) // find better way than this
+        // implement game logic + play game
+        while (true)
         {
             cin >> row >> col >> num; // get user input
 
-            // show user their score
-            cout << "Current score: " << score << endl;
+            cout << "Current score: " << score << endl; // show user their score
 
             // if they want to exit to main menu
             if (row == 0 && col == 0 && num == 0)
@@ -279,34 +254,34 @@ public:
                 cout << "Invalid input. Please try again." << endl;
                 continue;
             }
-            // Allows numbers to go on the board 
+            // allow correct input on the board 
             else if (arr[row - 1][col - 1] == 0 && correctInput(row - 1, col - 1, num, arr))
             {
                 arr[row - 1][col - 1] = num;
                 displayBoard(arr);
                 
+                // keep track of score and combo streak
                 calculateScore();
-                showScore(); 
                 updateComboStreak(true);
 
-                if (solved(arr)) // if the board is solved
+                if (solved(arr,row,col)) // if the board is solved
                 {
-                    // it returns true? congrats
-                    // it CANNOT be returning true since it is skipping :(
                     cout << "Congratulations! You solved the puzzle!" << endl;
+                    cout << "Final score: " << score << endl;
                     break;
                 }
                 else
                 {
+                    showScore();
                     cout << "Current score: " << score << endl;
                     cout << "Enter the row, column, and number (1-9) of your Sudoku move (ex: 2 5 2):" << endl;
                 }
 
             }
-            else // if their input is valid but incorrect
+            else // valid but incorrect input
             {
                 cout << "Invalid move! Please try again." << endl;
-                updateComboStreak(false);  // Reset combo streak 
+                updateComboStreak(false);  // end streak
                 mistakeCounter();
                 calculateScore();
                 showScore();
@@ -316,31 +291,31 @@ public:
         }
     }
 
+    // count mistakes
     void mistakeCounter()
     {
+        // increment and display
         mistakes++;
         cout << "Mistakes: " << mistakes << endl << endl;
 
-        // EASY LEVEL
-        if (mistakes > 6 && choiceLevel == 1)
+        if (mistakes > 6 && choiceLevel == 1) // easy difficulty
         {
             cout << "Game over! You have exceeded the maximum number of mistakes for this difficulty level." << endl << endl;
             exit(0); // Exit the program
         }
-        // MEDIUM LEVEL
-        else if (mistakes > 4 && choiceLevel == 2)
+        else if (mistakes > 4 && choiceLevel == 2) // medium difficulty
         {
             cout << "Game over! You have exceeded the maximum number of mistakes for this difficulty level." << endl;
             exit(0); // Exit the program
         }
-        // HARD LEVEL
-        else if (mistakes > 2 && choiceLevel == 3)
+        else if (mistakes > 2 && choiceLevel == 3) // hard difficulty
         {
             cout << "Game over! You have exceeded the maximum number of mistakes for this difficulty level." << endl;
             exit(0); // Exit the program
         }
     }
 
+    // reset mistakes after each play
     void resetMistakes()
     {
         mistakes = 0;
@@ -348,48 +323,51 @@ public:
 
     void calculateScore() 
     {
-        // Calculate mistake penalties based on difficulty level
+        // calculate score with mistakes
         int mistakePenalty = 0; 
 
-        if (mistakes>0)
+        if (mistakes>0) // if a mistake is made
         {
-            if (choiceLevel == 1)
+            if (choiceLevel == 1) // easy difficulty penalty
             {
                 mistakePenalty = -2;
             }
-            else if (choiceLevel == 2)
+            else if (choiceLevel == 2) // medium difficulty penalty
             {
                 mistakePenalty = -4;
             }
-            else
+            else if (choiceLevel ==3) // hard difficulty penalty
             {
                 mistakePenalty = -10;
             }
         }
 
-        // Apply mistake penalty
+        // new score w/ mistake penalty
         score += mistakePenalty;
 
-        // Calculate combo streak bonus
+        // streak combo bonuses
         int comboBonus;
-        if (choiceLevel == 1)
+
+        if (choiceLevel == 1) // easy difficulty combo bonus
         {
             comboBonus = 2;
         }
-        else if (choiceLevel == 2)
+        else if (choiceLevel == 2) // medium difficulty combo bonus
         {
-            comboBonus = 5;
+            comboBonus = 4;
         }
-        else
+        else if (choiceLevel ==3) // hard difficulty combo bonus
         {
-            comboBonus = 7;
+            comboBonus = 6;
         }
 
-        // Apply combo streak bonus
+        // new score w/ combo bonus
         score += comboBonus * comboStreak;
 
+        // reset mistakes
         resetMistakes();
 
+        // if score falls below 0, end the game
         if (score < 0)
         {
             cout << "Game over! Your score dropped below 0. Better luck next time!" << endl;
@@ -397,8 +375,8 @@ public:
         }
 
     }
-    
-
+  
+    // keep track of combo streak for bonuses
     void updateComboStreak(bool correctMove) 
     {
         if (correctMove)
@@ -407,16 +385,17 @@ public:
         }
         else
         {
-            comboStreak = 0;  // Reset combo streak on an incorrect move
+            comboStreak = 0;  // reset combo streak
         }
     }
 
+    // display score
     void showScore() 
     {
-        // Display the score
         cout << "Your score: " << score << endl;
     }
 
+    // prompt to continue/end game
     void continueGame()
     {
         int playAgain;
@@ -424,34 +403,31 @@ public:
         cout << "Would you like to play again? If so, enter '1' and if you are" << endl;
         cout << "done, enter '2':";
         cin >> playAgain;
-        if (playAgain == 1)
+        if (playAgain == 1) // allow user to play again
         {
             getChoice();
         }
-        else if (playAgain == 2)
+        else if (playAgain == 2) // allow user to exit
         {
             cout << "Thanks for playing! Try out more levels soon!" << endl;
         }
-        else
+        else // prompt for correct input
         {
-            cout << "Would you like to play again? If so, enter '1' and if you are" << endl;
-            cout << "done, enter '2':";
-            cin >> playAgain;
+            continueGame();
         }
     }
-
 };
 
 
 int main()
 {
-    // Make object of class
+    // make object of class
     game details;
 
-    // Call menu selection and get level choice
+    // call menu selection and get level choice + play game
     details.getChoice();
 
-    // done !
+    // done
     return 0;
 }
 
